@@ -1,7 +1,7 @@
 import { Origin } from "./origin";
 
 export interface Transformer{
-    id: number,
+    id: string,
     name: string,
     description: string,
     age: number,
