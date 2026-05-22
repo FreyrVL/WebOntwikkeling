@@ -8,29 +8,6 @@
     <title><%= title %></title>
 </head>
 <body>
-     <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Faction</th>
-                <th>Alive/active</th>
-                <th>Date of birth</th>
-            </tr>
-        </thead>
-        <tbody>
-        <% transformers.forEach(transformer => { %>
-            <tr>
-                <th><%= transformer.id %></th>
-                <td><%= transformer.name %></td>
-                <td><%= transformer.age %></td>
-                <td><%= transformer.faction %></td>
-                <td><%= transformer.isActive?'Yes':'No'%></td>
-                <td><%= transformer.birthDate %></td>
-            </tr>
-        <% }); %>
-     </tbody>
-     </table>
+    <%- include("../partials/tableTransformers", {transformers: transformers}) %>
 </body>
 </html>

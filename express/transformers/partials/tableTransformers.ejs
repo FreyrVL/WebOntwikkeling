@@ -1,0 +1,43 @@
+<div>
+    <input type="text" placeholder="Search by name..." class="input input-bordered input-primary input-sm w-full max-w-xs" /><button class="btn btn-sm btn-outline border-primary">Search</button>
+</div>
+<div>
+    <select class="select select-primary select-sm">
+        <option disabled selected>Sort by</option>
+            <option value="ID">ID</option>
+            <option value="name">Name</option>
+            <option value="age">Age</option>
+            <option value="alive">Alive/active</option>
+            <option value="faction">Faction</option>
+            <option value="birthdate">Date of birth</option>
+    </select>
+    <select class="select select-primary select-sm max-w-20">
+            <option value="asc">asc &UpArrow;</option>
+            <option value="desc">desc &downarrow;</option>
+    </select>
+</div>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Faction</th>
+                <th>Alive/active</th>
+                <th>Date of birth</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% transformers.forEach(transformer => { %>
+            <tr>
+                <th><%= transformer.id %></th>
+                <td><%= transformer.name %></td>
+                <td><%= transformer.age %></td>
+                <td><%= transformer.faction %></td>
+                <td><%= transformer.isActive?'Yes':'No'%></td>
+                <td><%= transformer.birthDate %></td>
+            </tr>
+        <% }); %>
+     </tbody>
+     </table>
