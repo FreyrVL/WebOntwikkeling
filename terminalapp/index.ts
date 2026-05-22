@@ -4,7 +4,6 @@ import { Origin } from "./types/origin";
 
 //URL's to JSON files on git repo
 const TRANSFORMERS_URL = "https://raw.githubusercontent.com/FreyrVL/json/main/transformers.json";
-const ORIGINS_URL = "https://raw.githubusercontent.com/FreyrVL/json/main/origins.json";
 
 //Fetch methods
 //Fetch transformers
@@ -22,25 +21,10 @@ async function fetchTransformers(): Promise<Transformer[]> {
         return [];
     }
 }
-async function fetchOrigins(): Promise<Origin[]> {
-    try {
-        const response = await fetch(ORIGINS_URL);
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch transformers JSON");
-        }
-
-        return await response.json() as Origin[];
-    } catch (error) {
-        console.log("Error:", error);
-        return [];
-    }
-}
 
 //Main method
 async function app(): Promise<void> {
     const transformers = await fetchTransformers();
-    const origins = await fetchOrigins();
 
     let running = true;
 
