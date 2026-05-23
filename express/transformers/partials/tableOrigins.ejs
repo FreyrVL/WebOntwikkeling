@@ -1,48 +1,5 @@
 <div class="container p-6 lg:ml-72">
-<form id="filterSort" action="/origins" method="GET"
-    class="table-controls flex flex-col gap-3 md:flex-row md:justify-start mb-4">
-
-    <div class="join join-horizontal">
-        <input
-            id="searchInput"
-            type="text"
-            name="search"
-            placeholder="Search by title..."
-            value="<%= query.search || '' %>"
-            class="input input-bordered input-primary input-sm w-full sm:w-auto join-item"
-        />
-
-        <button type="submit" class="btn btn-sm btn-outline border-primary sm:w-auto join-item">
-            Search
-        </button>
-    </div>
-
-    <div class="join join-horizontal">
-        <select
-            id="sortBy"
-            name="sortby"
-            class="select select-primary select-sm w-full sm:w-auto join-item">
-
-            <option disabled selected value="">Sort by</option>
-            <option value="id" <%= query.sortby === 'id' ? 'selected' : '' %>>ID</option>
-            <option value="title" <%= query.sortby === 'title' ? 'selected' : '' %>>Title</option>
-            <option value="type" <%= query.sortby === 'type' ? 'selected' : '' %>>Type</option>
-            <option value="releaseYear" <%= query.sortby === 'releaseYear' ? 'selected' : '' %>>Release year</option>
-            <option value="director" <%= query.sortby === 'director' ? 'selected' : '' %>>Director</option>
-            <option value="studio" <%= query.sortby === 'studio' ? 'selected' : '' %>>Studio</option>
-        </select>
-
-        <select
-            id="order"
-            name="order"
-            class="select select-primary select-sm w-full sm:w-auto join-item">
-
-            <option value="asc" <%= query.order === 'asc' ? 'selected' : '' %>>asc ↑</option>
-            <option value="desc" <%= query.order === 'desc' ? 'selected' : '' %>>desc ↓</option>
-        </select>
-    </div>
-</form>
-
+<%- include("../partials/tableControls", {query: query, table:"origins"}) %>
     <div class="hidden md:block overflow-x-auto rounded-box border border-base-content/20 bg-base-200">
         <table class="table">
             <thead class="bg-base-300">

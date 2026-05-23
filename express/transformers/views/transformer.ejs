@@ -75,9 +75,12 @@
           </div>
         </div>
         <div>
-          <h3 class="text-xl font-bold mb-3">
+          <div class="flex gap-x-2 items-center justify-between">
+            <h3 class="text-xl font-bold mb-3">
             Origin
           </h3>
+            <a class="btn btn-info" href="/origin/<%= transformer.origin.id %>"><i class="fa-solid fa-clapperboard"></i>View more details</a>
+          </div>
           <div class="stats stats-vertical xl:stats-horizontal bg-base-300 shadow max-w-full w-full">
             <div class="stat">
               <div class="stat-title">Title</div>

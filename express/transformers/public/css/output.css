@@ -1396,6 +1396,9 @@
   .min-w-0 {
     min-width: calc(var(--spacing) * 0);
   }
+  .flex-1 {
+    flex: 1;
+  }
   .flex-none {
     flex: none;
   }
@@ -1434,6 +1437,12 @@
   .flex-wrap {
     flex-wrap: wrap;
   }
+  .content-between {
+    align-content: space-between;
+  }
+  .items-center {
+    align-items: center;
+  }
   .items-start {
     align-items: flex-start;
   }
@@ -1445,6 +1454,9 @@
   }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
+  }
+  .gap-x-2 {
+    column-gap: calc(var(--spacing) * 2);
   }
   .gap-y-2 {
     row-gap: calc(var(--spacing) * 2);
@@ -1746,6 +1758,12 @@
     @layer daisyui.l1.l2 {
       --badge-color: var(--color-success);
       --badge-fg: var(--color-success-content);
+    }
+  }
+  .btn-info {
+    @layer daisyui.l1.l2.l3 {
+      --btn-color: var(--color-info);
+      --btn-fg: var(--color-info-content);
     }
   }
   .input-primary {
