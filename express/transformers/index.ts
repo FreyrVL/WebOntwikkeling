@@ -5,7 +5,7 @@ import detailsTransformerRouter from "./routes/detailstransformerrouter";
 import detailsOriginRouter from "./routes/detailsoriginrouter";
 import originsRouter from "./routes/originsrouter";
 
-import { connectToDatabase, populateDB } from "./database";
+import { connectToDatabase, populateDB, populateUsers } from "./database";
 
 const app : Express = express();
 
@@ -29,6 +29,7 @@ app.listen(PORT, async () => {
     try{
         await connectToDatabase();
         await populateDB();
+        await populateUsers();
         console.log("Server started on http://localhost:" + app.get('port'));
     }
     catch(e){

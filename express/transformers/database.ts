@@ -2,6 +2,8 @@ import { MongoClient, Db } from "mongodb";
 import dotenv from "dotenv";
 import { Transformer } from "./types/transformer";
 import { Origin } from "./types/origin";
+import { User } from "./types/user";
+import bcrypt from "bcrypt";
 dotenv.config();
 
 const uri = process.env.MONGO_URI;
@@ -14,11 +16,13 @@ if(uri === undefined)
 
 export const client = new MongoClient(uri);
 
-const db = client.db("webontwikkeling");
+export const db = client.db("webontwikkeling");
 const transformersCollection = db.collection<Transformer>("transformers");
 const originsCollection = db.collection<Origin>("origins");
+const usersCollection = db.collection<User>("users");
 
-async function connectToDatabase() {
+//Milestone 3 - Mongodb
+export async function connectToDatabase() {
     try {
         await client.connect();
         console.log("Connected to MongoDB database.");
@@ -28,7 +32,7 @@ async function connectToDatabase() {
     }
 }
 
-async function exit() {
+export async function exit() {
     try {
         await client.close();
         console.log("Disconnected from database.");
@@ -38,7 +42,7 @@ async function exit() {
     process.exit(0);
 }
 
-async function populateDB(){
+export async function populateDB(){
     const transformerCount = await transformersCollection.countDocuments();
     const originCount = await originsCollection.countDocuments();
 
@@ -64,23 +68,23 @@ async function populateDB(){
     }
 }
 
-async function getTransformers(): Promise<Transformer[]> {
+export async function getTransformers(): Promise<Transformer[]> {
     return await transformersCollection.find().toArray() as Transformer[];
 }
 
-async function getTransformerById(id: string): Promise<Transformer | null> {
+export async function getTransformerById(id: string): Promise<Transformer | null> {
     return await transformersCollection.findOne({ id }) as Transformer | null;
 }
 
-async function getOrigins(): Promise<Origin[]> {
+export async function getOrigins(): Promise<Origin[]> {
     return await originsCollection.find().toArray() as Origin[];
 }
 
-async function getOriginsById(id: string): Promise<Origin | null> {
+export async function getOriginsById(id: string): Promise<Origin | null> {
     return await originsCollection.findOne({ id }) as Origin | null;
 }
 
-async function updateTransformer(id: string, data: Partial<Transformer>): Promise<void> {
+export async function updateTransformer(id: string, data: Partial<Transformer>): Promise<void> {
     await transformersCollection.updateOne(
         { id },
         {
@@ -96,7 +100,7 @@ async function updateTransformer(id: string, data: Partial<Transformer>): Promis
     );
 }
 
-async function updateOrigin(id: string, data: Partial<Origin>): Promise<void> {
+export async function updateOrigin(id: string, data: Partial<Origin>): Promise<void> {
     await originsCollection.updateOne(
         { id },
         {
@@ -111,4 +115,32 @@ async function updateOrigin(id: string, data: Partial<Origin>): Promise<void> {
     );
 }
 
-export { db, connectToDatabase, populateDB, getTransformers, getTransformerById, getOrigins, getOriginsById, updateOrigin, updateTransformer };
+//Milestone 4 - Users
+export async function populateUsers() {
+    try {
+        const count = await usersCollection.countDocuments();
+
+        if (count == 0) {
+            const adminPassword = await bcrypt.hash("verysafeadminpassword123", 10);
+            const userPassword = await bcrypt.hash("totallysafepassword123", 10);
+            await usersCollection.insertMany([
+                {
+                    username: "admin",
+                    password: adminPassword,
+                    role: "ADMIN"
+                },
+                {
+                    username: "user",
+                    password: userPassword,
+                    role: "USER"
+                }
+            ]);
+        }
+        console.log("Succesfully populated users collection.");
+    }
+    catch (error) {
+        console.log("Error populating users collection.");
+    }
+}
+
+
