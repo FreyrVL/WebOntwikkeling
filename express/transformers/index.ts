@@ -5,6 +5,8 @@ import detailsTransformerRouter from "./routes/detailstransformerrouter";
 import detailsOriginRouter from "./routes/detailsoriginrouter";
 import originsRouter from "./routes/originsrouter";
 
+import { connectToDatabase, populateDB } from "./database";
+
 const app : Express = express();
 
 app.set("view engine", "ejs");
@@ -20,6 +22,16 @@ app.use("/", homeRouter);
 app.use("/transformer", detailsTransformerRouter);
 app.use("/origin", detailsOriginRouter)
 app.use("/origins", originsRouter);
-app.listen(app.get("port"), () => {
-    console.log("Server started on http://localhost:" + app.get('port'));
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, async () => {
+    try{
+        await connectToDatabase();
+        await populateDB();
+        console.log("Server started on http://localhost:" + app.get('port'));
+    }
+    catch(e){
+        console.log("Error encountered: " + e);
+    }
 });
