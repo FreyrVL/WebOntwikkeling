@@ -30,6 +30,7 @@
     "@tailwindcss/postcss": "^4.3.0",
     "autoprefixer": "^10.5.0",
     "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
     "daisyui": "^5.5.20",
     "dotenv": "^17.4.2",
     "ejs": "^5.0.1",
