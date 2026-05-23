@@ -1,43 +1,119 @@
-<div>
-    <input type="text" placeholder="Search by name..." class="input input-bordered input-primary input-sm w-full max-w-xs" /><button class="btn btn-sm btn-outline border-primary">Search</button>
-</div>
-<div>
-    <select class="select select-primary select-sm">
-        <option disabled selected>Sort by</option>
-            <option value="ID">ID</option>
-            <option value="name">Name</option>
-            <option value="age">Age</option>
-            <option value="alive">Alive/active</option>
-            <option value="faction">Faction</option>
-            <option value="birthdate">Date of birth</option>
-    </select>
-    <select class="select select-primary select-sm max-w-20">
-            <option value="asc">asc &UpArrow;</option>
-            <option value="desc">desc &downarrow;</option>
-    </select>
-</div>
+<div class="container mx-auto p-2 sm:p-4">
+<form id="filterSort" action="/" method="GET"
+    class="table-controls flex flex-col gap-3 md:flex-row md:justify-start mb-4">
 
-<table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Faction</th>
-                <th>Alive/active</th>
-                <th>Date of birth</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="join join-horizontal">
+        <input
+            id="searchInput"
+            type="text"
+            name="search"
+            placeholder="Search by name..."
+            value="<%= query.search || '' %>"
+            class="input input-bordered input-primary input-sm w-full sm:w-auto join-item"
+        />
+
+        <button type="submit" class="btn btn-sm btn-outline border-primary sm:w-auto join-item">
+            Search
+        </button>
+    </div>
+
+    <div class="join join-horizontal">
+        <select
+            id="sortBy"
+            name="sortby"
+            class="select select-primary select-sm w-full sm:w-auto join-item">
+
+            <option disabled selected value="">Sort by</option>
+            <option value="id"<%= query.sortby === 'id' ? 'selected' : '' %>>ID</option>
+            <option value="name"<%= query.sortby === 'name' ? 'selected' : '' %>>Name</option>
+            <option value="age"<%= query.sortby === 'age' ? 'selected' : '' %>>Age</option>
+            <option value="isActive"<%= query.sortby === 'isActive' ? 'selected' : '' %>>Alive/active</option>
+            <option value="faction"<%= query.sortby === 'faction' ? 'selected' : '' %>>Faction</option>
+            <option value="birthDate"<%= query.sortby === 'birthDate' ? 'selected' : '' %>>Date of birth</option>
+        </select>
+
+        <select
+            id="order"
+            name="order"
+            class="select select-primary select-sm w-full sm:w-auto join-item">
+
+            <option value="asc"<%= query.order === 'asc' ? 'selected' : '' %>>asc ↑</option>
+            <option value="desc"<%= query.order === 'desc' ? 'selected' : '' %>>desc ↓</option>
+        </select>
+    </div>
+</form>
+
+    <div class="hidden md:block overflow-x-auto rounded-box border border-base-content/20 bg-base-200">
+        <table class="table">
+            <thead class="bg-base-300">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Faction</th>
+                    <th>Alive/active</th>
+                    <th>Date of birth</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% transformers.forEach(transformer => { %>
+                    <tr class="relative hover:bg-primary hover:text-primary-content">
+                        <th>
+                            <%= transformer.id %>
+
+                            <a href="/transformer/<%= transformer.id %>"
+                               target="_blank"
+                               class="absolute inset-0">
+                            </a>
+                        </th>
+
+                        <td><%= transformer.name %></td>
+                        <td><%= transformer.age %></td>
+                        <td><%= transformer.faction %></td>
+                        <td><%= transformer.isActive ? 'Yes' : 'No' %></td>
+                        <td><%= transformer.birthDate %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="grid gap-3 md:hidden">
         <% transformers.forEach(transformer => { %>
-            <tr>
-                <th><%= transformer.id %></th>
-                <td><%= transformer.name %></td>
-                <td><%= transformer.age %></td>
-                <td><%= transformer.faction %></td>
-                <td><%= transformer.isActive?'Yes':'No'%></td>
-                <td><%= transformer.birthDate %></td>
-            </tr>
-        <% }); %>
-     </tbody>
-     </table>
+
+            <a href="/transformer/<%= transformer.id %>"
+               target="_blank"
+               class="card bg-base-200 border border-base-content/20 shadow-sm hover:bg-primary hover:text-primary-content transition-colors">
+
+                <div class="card-body p-4 text-sm">
+
+                    <div class="flex justify-between items-start gap-2">
+                        <h2 class="card-title text-base">
+                            <%= transformer.name %>
+                        </h2>
+
+                        <span class="badge badge-primary">
+                            #<%= transformer.id %>
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-y-2 mt-2">
+                        <span class="font-semibold">Age:</span>
+                        <span><%= transformer.age %></span>
+
+                        <span class="font-semibold">Faction:</span>
+                        <span><%= transformer.faction %></span>
+
+                        <span class="font-semibold">Active:</span>
+                        <span><%= transformer.isActive ? 'Yes' : 'No' %></span>
+
+                        <span class="font-semibold">Birth:</span>
+                        <span><%= transformer.birthDate %></span>
+                    </div>
+                </div>
+            </a>
+
+        <% }) %>
+    </div>
+</div>
