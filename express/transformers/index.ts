@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import path from "path";
 import homeRouter from "./routes/homerouter";
+import detailsRouter from "./routes/detailsrouter";
 
 const app : Express = express();
 
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, 'dist')))
 app.set("port", process.env.PORT || 3000);
 
 app.use("/", homeRouter);
+app.use("/transformer", detailsRouter);
 app.listen(app.get("port"), () => {
     console.log("Server started on http://localhost:" + app.get('port'));
 });
