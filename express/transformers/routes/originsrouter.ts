@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { Origin } from "../types/origin";
-import { getOrigins } from "../database";
+import { getOrigins, updateOrigin } from "../database";
 
 const router = Router();
 
@@ -74,6 +74,12 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
             query: {}
         });
     }
+});
+
+router.post("/:id/edit", async (req, res) => {
+    await updateOrigin(req.params.id, req.body);
+
+    res.redirect("/");
 });
 
 export default router;

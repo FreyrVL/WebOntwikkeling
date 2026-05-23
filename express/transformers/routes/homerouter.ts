@@ -1,6 +1,6 @@
 import {Router, Request, Response } from "express";
 import {Transformer} from "../types/transformer";
-import { getTransformers } from "../database";
+import { getTransformers, updateTransformer } from "../database";
 
 const router = Router();
 
@@ -49,6 +49,23 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
         console.error("JSON data fetch error: ", error);
         res.render("index", { title: "Home", tranformers: [], query:req.query });
     }
+});
+
+router.post("/:id/edit", async (req, res) => {
+    const { id } = req.params;
+
+    const { name, age, faction, isActive, birthDate, description } = req.body;
+
+    await updateTransformer(id, {
+        name,
+        age: Number(age),
+        faction,
+        isActive: isActive === "true",
+        birthDate,
+        description
+    });
+
+    res.redirect("/");
 });
 
 export default router;
