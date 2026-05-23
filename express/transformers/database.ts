@@ -80,4 +80,35 @@ async function getOriginsById(id: string): Promise<Origin | null> {
     return await originsCollection.findOne({ id }) as Origin | null;
 }
 
-export { db, connectToDatabase, populateDB, getTransformers, getTransformerById, getOrigins, getOriginsById };
+async function updateTransformer(id: string, data: Partial<Transformer>): Promise<void> {
+    await transformersCollection.updateOne(
+        { id },
+        {
+            $set: {
+                name: data.name,
+                age: data.age,
+                faction: data.faction,
+                isActive: data.isActive,
+                birthDate: data.birthDate,
+                description: data.description,
+            }
+        }
+    );
+}
+
+async function updateOrigin(id: string, data: Partial<Origin>): Promise<void> {
+    await originsCollection.updateOne(
+        { id },
+        {
+            $set: {
+                title: data.title,
+                type: data.type,
+                releaseYear: data.releaseYear,
+                director: data.director,
+                studio: data.studio,
+            }
+        }
+    );
+}
+
+export { db, connectToDatabase, populateDB, getTransformers, getTransformerById, getOrigins, getOriginsById, updateOrigin, updateTransformer };
