@@ -1,77 +1,99 @@
 <div class="container p-6 lg:ml-72">
-<%- include("../partials/tableControls", {query: query, table:"origins"}) %>
-    <div class="hidden md:block overflow-x-auto rounded-box border border-base-content/20 bg-base-200">
-        <table class="table">
-            <thead class="bg-base-300">
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Type</th>
-                    <th>Release year</th>
-                    <th>Director</th>
-                    <th>Studio</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <% origins.forEach(origin => { %>
-                    <tr class="relative hover:bg-primary hover:text-primary-content">
-
-                        <td>
-                            <%= origin.id %>
-
-                            <a href="/origin/<%= origin.id %>"
-                               target="_blank"
-                               class="absolute inset-0">
-                            </a>
-                        </td>
-
-                        <td><%= origin.title %></td>
-                        <td><%= origin.type %></td>
-                        <td><%= origin.releaseYear %></td>
-                        <td><%= origin.director %></td>
-                        <td><%= origin.studio %></td>
+    <%- include("../partials/tableControls", {query: query, table:"origins"}) %>
+        <div class="hidden md:block overflow-x-auto rounded-box border border-base-content/20 bg-base-200">
+            <table class="table">
+                <thead class="bg-base-300">
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Release year</th>
+                        <th>Director</th>
+                        <th>Studio</th>
                     </tr>
+                </thead>
+
+                <tbody>
+                    <% origins.forEach(origin=> { %>
+                        <tr class="relative hover:bg-primary hover:text-primary-content">
+                            <th>
+                                <div class="avatar">
+                                    <div class="w-12 rounded-xl">
+                                        <img src="<%= origin.imageUrl %>" alt="">
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <%= origin.id %>
+
+                                    <a href="/origin/<%= origin.id %>" target="_self" class="absolute inset-0">
+                                    </a>
+                            </td>
+
+                            <td>
+                                <%= origin.title %>
+                            </td>
+                            <td>
+                                <%= origin.type %>
+                            </td>
+                            <td>
+                                <%= origin.releaseYear %>
+                            </td>
+                            <td>
+                                <%= origin.director %>
+                            </td>
+                            <td>
+                                <%= origin.studio %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="grid gap-3 md:hidden">
+            <% origins.forEach(origin=> { %>
+
+                <a href="/origin/<%= origin.id %>" target="_self"
+                    class="card bg-base-200 border border-base-content/20 shadow-sm hover:bg-primary hover:text-primary-content transition-colors">
+
+                    <div class="card-body p-4 text-sm">
+
+                        <div class="flex justify-between items-start gap-2">
+                            <h2 class="card-title text-base">
+                                <%= origin.title %>
+                            </h2>
+
+                            <span class="badge badge-primary">
+                                #<%= origin.id %>
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-y-2 mt-2">
+                            <span class="font-semibold">Type:</span>
+                            <span>
+                                <%= origin.type %>
+                            </span>
+
+                            <span class="font-semibold">Release year:</span>
+                            <span>
+                                <%= origin.releaseYear %>
+                            </span>
+
+                            <span class="font-semibold">Director:</span>
+                            <span>
+                                <%= origin.director %>
+                            </span>
+
+                            <span class="font-semibold">Studio:</span>
+                            <span>
+                                <%= origin.studio %>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
                 <% }) %>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="grid gap-3 md:hidden">
-        <% origins.forEach(origin => { %>
-
-            <a href="/origin/<%= origin.id %>"
-               target="_self"
-               class="card bg-base-200 border border-base-content/20 shadow-sm hover:bg-primary hover:text-primary-content transition-colors">
-
-                <div class="card-body p-4 text-sm">
-
-                    <div class="flex justify-between items-start gap-2">
-                        <h2 class="card-title text-base">
-                            <%= origin.title %>
-                        </h2>
-
-                        <span class="badge badge-primary">
-                            #<%= origin.id %>
-                        </span>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-y-2 mt-2">
-                        <span class="font-semibold">Type:</span>
-                        <span><%= origin.type %></span>
-
-                        <span class="font-semibold">Release year:</span>
-                        <span><%= origin.releaseYear %></span>
-
-                        <span class="font-semibold">Director:</span>
-                        <span><%= origin.director %></span>
-
-                        <span class="font-semibold">Studio:</span>
-                        <span><%= origin.studio %></span>
-                    </div>
-                </div>
-            </a>
-
-        <% }) %>
-    </div>
+        </div>
 </div>
