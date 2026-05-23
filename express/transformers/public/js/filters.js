@@ -10,12 +10,3 @@
     order.addEventListener("change", () => {
         form.submit();
     });
-
-    let timeout;
-    searchInput.addEventListener("input", () => {
-        clearTimeout(timeout);
-
-        timeout = setTimeout(() => {
-            form.submit();
-        }, 400);
-    });
