@@ -1384,6 +1384,12 @@
   .w-12 {
     width: calc(var(--spacing) * 12);
   }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
+  }
+  .w-24 {
+    width: calc(var(--spacing) * 24);
+  }
   .w-60 {
     width: calc(var(--spacing) * 60);
   }
@@ -1436,9 +1442,6 @@
   }
   .flex-wrap {
     flex-wrap: wrap;
-  }
-  .content-between {
-    align-content: space-between;
   }
   .items-center {
     align-items: center;
@@ -1760,10 +1763,28 @@
       --badge-fg: var(--color-success-content);
     }
   }
+  .btn-error {
+    @layer daisyui.l1.l2.l3 {
+      --btn-color: var(--color-error);
+      --btn-fg: var(--color-error-content);
+    }
+  }
   .btn-info {
     @layer daisyui.l1.l2.l3 {
       --btn-color: var(--color-info);
       --btn-fg: var(--color-info-content);
+    }
+  }
+  .btn-primary {
+    @layer daisyui.l1.l2.l3 {
+      --btn-color: var(--color-primary);
+      --btn-fg: var(--color-primary-content);
+    }
+  }
+  .btn-success {
+    @layer daisyui.l1.l2.l3 {
+      --btn-color: var(--color-success);
+      --btn-fg: var(--color-success-content);
     }
   }
   .input-primary {
@@ -1791,17 +1812,10 @@
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
   }
-  .hover\:bg-primary {
+  .hover\:bg-base-300 {
     &:hover {
       @media (hover: hover) {
-        background-color: var(--color-primary);
-      }
-    }
-  }
-  .hover\:text-primary-content {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-primary-content);
+        background-color: var(--color-base-300);
       }
     }
   }

@@ -26,6 +26,7 @@ document.addEventListener("click", (e) => {
         }
     }
 
+    //Cancel the edit
     const cancelBtn = e.target.closest(".cancel-btn");
     if (cancelBtn) {
 

@@ -77,9 +77,19 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
 });
 
 router.post("/:id/edit", async (req, res) => {
-    await updateOrigin(req.params.id, req.body);
+    const { id } = req.params;
 
-    res.redirect("/");
+    const { title, type, releaseYear, director, studio } = req.body;
+
+    await updateOrigin(id, {
+        title: title,
+        type: type,
+        releaseYear: releaseYear,
+        director: director,
+        studio: studio
+    });
+
+    res.redirect("/origins");
 });
 
 export default router;
