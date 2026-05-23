@@ -8,15 +8,15 @@
 
     <div
       class="card bg-base-200 border border-base-300 shadow-2xl grid grid-cols-1 lg:grid-cols-[1fr_2fr] overflow-hidden h-full">
-      <figure class="relative min-w-0 overflow-hidden min-h-[320px] lg:min-h-[85vh] lg:h-[85vh]">
+      <figure class="relative min-w-0 overflow-hidden min-h-80 lg:min-h-[85vh] lg:h-[85vh]">
         <img
           src="<%= transformer.imageUrl %>"
           alt="<%= transformer.name %>"
           class="block  h-full object-cover object-top" />
-        <div class="absolute inset-0 bg-gradient-to-t from-base-300 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-base-300 via-transparent to-transparent"></div>
         <div class="absolute bottom-4 left-4 right-4">
           <div
-            class="badge badge-neutral badge-outline text-white border-white h-fit whitespace-normal break-words max-w-full py-3">
+            class="badge badge-neutral badge-outline text-white border-white h-fit whitespace-normal wrap-break-word max-w-full py-3">
             <%= transformer.imageCredit %>
           </div>
         </div>
@@ -57,7 +57,7 @@
           </div>
           <div class="stat">
             <div class="stat-title">Faction</div>
-            <div class="stat-value text-warning text-2xl break-words">
+            <div class="stat-value text-warning text-2xl wrap-break-word">
               <%= transformer.faction %>
             </div>
           </div>
