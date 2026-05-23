@@ -13,12 +13,14 @@ if(uri === undefined)
     }
 
 export const client = new MongoClient(uri);
-let db: Db;
+
+const db = client.db("webontwikkeling");
+const transformersCollection = db.collection<Transformer>("transformers");
+const originsCollection = db.collection<Origin>("origins");
 
 async function connectToDatabase() {
     try {
         await client.connect();
-        db = client.db("webontwikkeling");
         console.log("Connected to MongoDB database.");
 
     } catch (e) {
@@ -37,11 +39,6 @@ async function exit() {
 }
 
 async function populateDB(){
-    const db = client.db("webontwikkeling");
-
-    const transformersCollection = db.collection("transformers");
-    const originsCollection = db.collection("origins");
-
     const transformerCount = await transformersCollection.countDocuments();
     const originCount = await originsCollection.countDocuments();
 
@@ -66,4 +63,21 @@ async function populateDB(){
         console.log("Origins collection populated succesfully.");
     }
 }
-export { db, connectToDatabase, populateDB };
+
+async function getTransformers(): Promise<Transformer[]> {
+    return await transformersCollection.find().toArray() as Transformer[];
+}
+
+async function getTransformerById(id: string): Promise<Origin | null> {
+    return await transformersCollection.findOne({ id }) as Origin | null;
+}
+
+async function getOrigins(): Promise<Origin[]> {
+    return await originsCollection.find().toArray() as Origin[];
+}
+
+async function getOriginsById(id: string): Promise<Origin | null> {
+    return await originsCollection.findOne({ id }) as Origin | null;
+}
+
+export { db, connectToDatabase, populateDB, getTransformers, getTransformerById, getOrigins, getOriginsById };
