@@ -14,6 +14,7 @@
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
+    "@types/mongodb": "^4.0.6",
     "@types/node": "^25.5.0",
     "@types/supertest": "^7.2.0",
     "jest": "^30.3.0",
@@ -27,8 +28,10 @@
     "@tailwindcss/postcss": "^4.3.0",
     "autoprefixer": "^10.5.0",
     "daisyui": "^5.5.20",
+    "dotenv": "^17.4.2",
     "ejs": "^5.0.1",
     "express": "^5.2.1",
+    "mongodb": "^7.2.0",
     "postcss": "^8.5.15",
     "postcss-cli": "^11.0.1",
     "tailwindcss": "^4.3.0"
