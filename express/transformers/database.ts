@@ -68,8 +68,8 @@ async function getTransformers(): Promise<Transformer[]> {
     return await transformersCollection.find().toArray() as Transformer[];
 }
 
-async function getTransformerById(id: string): Promise<Origin | null> {
-    return await transformersCollection.findOne({ id }) as Origin | null;
+async function getTransformerById(id: string): Promise<Transformer | null> {
+    return await transformersCollection.findOne({ id }) as Transformer | null;
 }
 
 async function getOrigins(): Promise<Origin[]> {
