@@ -1,0 +1,64 @@
+<input id="sidebar-toggle" type="checkbox" class="peer hidden" />
+
+<nav class="navbar bg-base-100 border-b border-base-300 lg:hidden">
+  <div class="flex-none">
+    <label for="sidebar-toggle" class="btn btn-square btn-ghost">
+      <i class="fa-solid fa-bars text-lg"></i>
+    </label>
+  </div>
+</nav>
+
+<label
+  for="sidebar-toggle"
+  class="
+    fixed inset-0 z-40 bg-black/40
+    hidden cursor-pointer
+    peer-checked:block
+    lg:hidden
+  "
+></label>
+
+<aside
+  class="
+    fixed top-0 left-0 z-50
+    h-screen w-60
+    bg-base-100 border-r border-base-300
+
+    transform transition-transform duration-300
+    -translate-x-full
+    peer-checked:translate-x-0
+
+    lg:translate-x-0
+  "
+>
+
+  <ul class="menu p-4 w-full text-base-content text-lg">
+    <li>
+      <a href="/" target="_self">
+        <i class="fa-solid fa-house w-5"></i>
+        Home
+      </a>
+    </li>
+
+    <li>
+      <a href="/" target="_self">
+        <i class="fa-solid fa-robot w-5"></i>
+        Transformers
+      </a>
+    </li>
+
+    <li>
+      <a href="/origins" target="_self">
+        <i class="fa-solid fa-clipboard w-5"></i>
+        Origins
+      </a>
+    </li>
+
+    <li>
+      <a class="/users" target="_self">
+        <i class="fa-solid fa-user w-5"></i>
+        Users
+      </a>
+    </li>
+  </ul>
+</aside>
