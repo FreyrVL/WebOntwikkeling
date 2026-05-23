@@ -1,22 +1,17 @@
 import {Router, Request, Response } from "express";
 import {Transformer} from "../types/transformer";
+import { getTransformerById } from "../database";
 
 const router = Router();
 
 router.get("/:slug", async (req: Request, res: Response): Promise<void> => {
     const {slug} = req.params;
-    const transformersUrl = "https://raw.githubusercontent.com/FreyrVL/json/main/transformers.json";
 
     try{
-        const response = await fetch(transformersUrl);
-        const transformersData = await response.json();
-
-        const transformer: Transformer = transformersData.find((transformer: Transformer) => transformer.id === slug);
-        console.log(transformer);
-        console.log(transformer.name);
-
-        res.render("transformer", {title:`${transformer.name} - details`, transformer:transformer});
-
+        const transformer: Transformer | null = await getTransformerById(slug.toString());
+        if(transformer){
+            res.render("transformer", {title:`${transformer.name} - details`, transformer:transformer});
+        }
     } catch(error){
         console.error("JSON data fetch error: ", error);
         res.render("index", {title:"Home", tranformers:[]});

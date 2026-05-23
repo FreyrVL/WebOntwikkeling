@@ -1,23 +1,14 @@
 import { Router, Request, Response } from "express";
 import { Origin } from "../types/origin";
+import { getOriginsById } from "../database";
 
 const router = Router();
 
 router.get("/:slug", async (req: Request, res: Response): Promise<void> => {
     const { slug } = req.params;
-    const originsUrl = "https://raw.githubusercontent.com/FreyrVL/json/main/origins.json";
 
-    try {
-
-        const response = await fetch(originsUrl);
-        const originsData = await response.json();
-
-        const origin: Origin = originsData.find(
-            (origin: Origin) => origin.id === slug
-        );
-
-        console.log(origin);
-
+    try {   
+        const origin: Origin | null = await getOriginsById(slug.toString());
         if (origin) {
 
             res.render("origin", {

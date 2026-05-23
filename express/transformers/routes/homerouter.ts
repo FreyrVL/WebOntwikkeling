@@ -1,20 +1,17 @@
 import {Router, Request, Response } from "express";
 import {Transformer} from "../types/transformer";
+import { getTransformers } from "../database";
 
 const router = Router();
 
 router.get("/", async (req: Request, res: Response): Promise<void> => {
     const { search, sortby, order } = req.query;
 
-    const transformersUrl = "https://raw.githubusercontent.com/FreyrVL/json/main/transformers.json";
-
     try {
-        const response = await fetch(transformersUrl);
-        const transformersData: Transformer[] = await response.json();
+        let transformers: Transformer[] | null = await getTransformers();
 
-        let transformers: Transformer[] = transformersData;
-
-        if (typeof search === "string" && search.trim() !== "") {
+        if(transformers){
+            if (typeof search === "string" && search.trim() !== "") {
             const searchLower = search.toLowerCase();
 
             transformers = transformers.filter((transformer: Transformer) =>
@@ -47,7 +44,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
             transformers:transformers,
             query:req.query
         });
-
+        }
     } catch (error) {
         console.error("JSON data fetch error: ", error);
         res.render("index", { title: "Home", tranformers: [], query:req.query });
