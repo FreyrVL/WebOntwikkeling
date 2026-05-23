@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" class="h-full">
+<%- include("../partials/head", { title: title }) %>
+
+<body class="min-h-screen p-4 lg:p-6 bg-base-100">
+  <div class="container mx-auto max-h-[85vh]">
+
+    <a class="underline decoration-primary inline-block mb-2" href="/origins">
+      &LeftArrow; Back to origins
+    </a>
+
+    <div
+      class="card bg-base-200 border border-base-300 shadow-2xl grid grid-cols-1 lg:grid-cols-[1fr_2fr] overflow-hidden h-full">
+
+      <figure class="relative min-w-0 overflow-hidden min-h-80 lg:min-h-[85vh] lg:h-[85vh]">
+        <img
+          src="<%= origin.imageUrl %>"
+          alt="<%= origin.title %>"
+          class="block h-full object-cover object-top" />
+
+        <div class="absolute inset-0 bg-linear-to-t from-base-300 via-transparent to-transparent"></div>
+                <div class="absolute bottom-4 left-4 right-4">
+          <div
+            class="badge badge-neutral badge-outline text-white border-white h-fit whitespace-normal wrap-break-word max-w-full py-3">
+            <%= origin.imageCredit %>
+          </div>
+        </div>
+      </figure>
+
+      <div class="card-body p-6 lg:p-8 overflow-y-auto min-w-0">
+
+        <div class="mb-6">
+          <h2 class="text-4xl lg:text-5xl font-black leading-none">
+            <%= origin.title %>
+          </h2>
+
+          <p class="text-base lg:text-lg text-base-content/70 mt-3">
+            <%= origin.description %>.
+          </p>
+        </div>
+
+        <h3 class="text-xl font-bold mb-2">
+          Info
+        </h3>
+
+        <div class="stats stats-vertical xl:stats-horizontal bg-base-300 shadow mb-6">
+
+          <div class="stat">
+            <div class="stat-title">ID</div>
+
+            <div class="stat-value text-primary text-2xl">
+              <%= origin.id %>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-title">Title</div>
+
+            <div class="stat-value text-secondary text-2xl wrap-break-word">
+              <%= origin.title %>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-title">Type</div>
+
+            <div class="stat-value text-success text-2xl wrap-break-word">
+              <%= origin.type %>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats stats-vertical xl:stats-horizontal bg-base-300 shadow mb-6 max-w-full w-full">
+
+          <div class="stat">
+            <div class="stat-title">Release Year</div>
+
+            <div class="stat-value text-warning text-2xl">
+              <%= origin.releaseYear %>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-title">Director</div>
+
+            <div class="stat-value text-xl wrap-break-word">
+              <%= origin.director %>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-title">Studio</div>
+
+            <div class="stat-value text-xl wrap-break-word">
+              <%= origin.studio %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

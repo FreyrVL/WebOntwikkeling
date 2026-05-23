@@ -1,4 +1,4 @@
-<div class="container mx-auto p-2 sm:p-4">
+<div class="container p-6 lg:ml-72">
 <form id="filterSort" action="/" method="GET"
     class="table-controls flex flex-col gap-3 md:flex-row md:justify-start mb-4">
 
@@ -47,6 +47,7 @@
         <table class="table">
             <thead class="bg-base-300">
                 <tr>
+                    <th></th>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Age</th>
@@ -60,18 +61,27 @@
                 <% transformers.forEach(transformer => { %>
                     <tr class="relative hover:bg-primary hover:text-primary-content">
                         <th>
+                            <div class="avatar">
+                                <div class="w-12 rounded-xl">
+                                    <img src="<%= transformer.imageUrl %>" alt="">
+                                </div>
+                            </div>
+                        </th>
+                        <td>
                             <%= transformer.id %>
 
                             <a href="/transformer/<%= transformer.id %>"
                                target="_blank"
                                class="absolute inset-0">
                             </a>
-                        </th>
+                        </td>
 
                         <td><%= transformer.name %></td>
                         <td><%= transformer.age %></td>
                         <td><%= transformer.faction %></td>
-                        <td><%= transformer.isActive ? 'Yes' : 'No' %></td>
+                        <td>
+                            <div class="badge <%= transformer.isActive ? 'badge-success' : 'badge-error' %>"><%= transformer.isActive ? 'Yes' : 'No' %></div>
+                        </td>
                         <td><%= transformer.birthDate %></td>
                     </tr>
                 <% }) %>
@@ -82,8 +92,8 @@
     <div class="grid gap-3 md:hidden">
         <% transformers.forEach(transformer => { %>
 
-            <a href="/transformer/<%= transformer.id %>"
-               target="_blank"
+            <a href="/transformer/<%= transformer.id %> "
+               target="_self"
                class="card bg-base-200 border border-base-content/20 shadow-sm hover:bg-primary hover:text-primary-content transition-colors">
 
                 <div class="card-body p-4 text-sm">
