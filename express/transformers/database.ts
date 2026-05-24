@@ -135,12 +135,43 @@ export async function populateUsers() {
                     role: "USER"
                 }
             ]);
+            console.log("Succesfully populated users collection.");
         }
-        console.log("Succesfully populated users collection.");
+        
     }
     catch (error) {
         console.log("Error populating users collection.");
     }
 }
 
+export async function login(username: string, password: string) {
+if (!username || !password) return null;
 
+    const user = await usersCollection.findOne<User>({ username });
+
+    if (!user) return null;
+
+    const valid = await bcrypt.compare(password, user.password!);
+
+    if (!valid) return null;
+
+    return user;
+}
+
+export async function findUser(username:string){
+    let user : User | null = await usersCollection.findOne<User>({username: username});
+    return user;
+}
+
+export async function addUser(username:string, hashedPassword:string){
+    let user : User | null = await usersCollection.findOne<User>({username: username});
+
+    if(!user){
+        await usersCollection.insertOne({
+        username,
+        password: hashedPassword,
+        role: "USER"
+    });
+    }
+
+}
