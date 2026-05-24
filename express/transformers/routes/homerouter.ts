@@ -1,6 +1,7 @@
 import {Router, Request, Response } from "express";
 import {Transformer} from "../types/transformer";
 import { getTransformers, updateTransformer } from "../database";
+import { requireAdmin, requireAuth } from "../middleware/sessionMiddleware";
 
 const router = Router();
 
@@ -42,7 +43,8 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
         res.render("index", {
             title: "Home",
             transformers:transformers,
-            query:req.query
+            query:req.query,
+            user:req.session.user
         });
         }
     } catch (error) {
@@ -51,7 +53,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
     }
 });
 
-router.post("/:id/edit", async (req, res) => {
+router.post("/:id/edit", requireAuth, requireAdmin, async (req: Request<{ id: string }>, res) => {
     const { id } = req.params;
 
     const { name, age, faction, isActive, birthDate, description } = req.body;
@@ -67,5 +69,7 @@ router.post("/:id/edit", async (req, res) => {
 
     res.redirect("/");
 });
+
+
 
 export default router;

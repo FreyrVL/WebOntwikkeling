@@ -4,8 +4,11 @@ import homeRouter from "./routes/homerouter";
 import detailsTransformerRouter from "./routes/detailstransformerrouter";
 import detailsOriginRouter from "./routes/detailsoriginrouter";
 import originsRouter from "./routes/originsrouter";
+import loginRouter from "./routes/loginrouter";
+import logoutRouter from "./routes/logoutrouter";
+import registerRouter from "./routes/registerrouter";
 import session, { MemoryStore } from "express-session";
-import { secureMiddleware } from "./middleware/sessionMiddleware";
+import { requireAuth, secureMiddleware } from "./middleware/sessionMiddleware";
 import MongoStore from 'connect-mongo'
 import { connectToDatabase, populateDB, populateUsers } from "./database";
 import { User } from "./types/user";
@@ -42,22 +45,29 @@ declare module 'express-session' {
     }
 }
 
-export default session({
-    secret: process.env.SESSION_SECRET ?? "supersecret",
-    store: mongoStore,
-    resave: true,
-    saveUninitialized: true,
+app.use(session({
+    secret: process.env.SECRET ?? "supersecret",
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        dbName: "sessions"
+    }),
+    resave: false,
+    saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
-});
+}));
+app.use("/login", loginRouter);
+app.use("/register", registerRouter);
+app.use("/logout", logoutRouter);
 
-app.use(session);
+app.use(requireAuth); 
 
-app.use("/", secureMiddleware, homeRouter);
-app.use("/transformer", secureMiddleware,  detailsTransformerRouter);
-app.use("/origin", secureMiddleware,  detailsOriginRouter)
-app.use("/origins", secureMiddleware,  originsRouter);
+app.use("/",homeRouter);
+app.use("/transformer",  detailsTransformerRouter);
+app.use("/origin",  detailsOriginRouter)
+app.use("/origins",  originsRouter);
+
 
 app.listen(PORT, async () => {
     try{

@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { Origin } from "../types/origin";
 import { getOrigins, updateOrigin } from "../database";
+import { requireAdmin, requireAuth } from "../middleware/sessionMiddleware";
 
 const router = Router();
 
@@ -61,7 +62,8 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
             res.render("origins", {
                 title: "Origins",
                 origins,
-                query: req.query
+                query: req.query,
+                user: req.session.user
             });
         }
     } catch (error) {
@@ -76,7 +78,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
     }
 });
 
-router.post("/:id/edit", async (req, res) => {
+router.post("/:id/edit", requireAuth, requireAdmin, async (req: Request<{ id: string }>, res) => {
     const { id } = req.params;
 
     const { title, type, releaseYear, director, studio } = req.body;

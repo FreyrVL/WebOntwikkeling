@@ -1,7 +1,8 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, ServerSessionId } from "mongodb";
 
 export interface User {
-    username: string;
-    password: string;
-    role: "ADMIN" | "USER";
+    _id?: ServerSessionId,
+    username: string,
+    password: string,
+    role: "ADMIN" | "USER"
 }
